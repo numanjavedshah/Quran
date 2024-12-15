@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Holy Quran</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    header .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #34495e;
+      color: white;
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 2px solid #2c3e50;
+    }
+
+    .sidebar h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 15px;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #ecf0f1;
+      color: #34495e;
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: white;
+    }
+
+    .surah {
+      margin-bottom: 40px;
+    }
+
+    .surah h2 {
+      font-family: 'Amiri', serif;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .surah .arabic {
+      font-family: 'Amiri', serif;
+      font-size: 1.5rem;
+      line-height: 2;
+      color: #2c3e50;
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    .surah .translation {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .content {
+        padding: 15px;
+      }
+
+      .surah h2 {
+        font-size: 1.5rem;
+      }
+
+      .surah .arabic {
+        font-size: 1.2rem;
+      }
+
+      .surah .translation {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="quran.png" alt="Holy Quran Logo">
+      Holy Quran
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="sidebar">
+      <h2>Surahs</h2>
+      <ul id="surah-list">
+        <!-- Adding all 114 Surah names -->
+        <script>
+          const surahNames = [
+            "Al-Fatiha", "Al-Baqarah", "Al-Imran", "An-Nisa", "Al-Maidah", "Al-Anam", "Al-Araf", "Al-Anfal", "At-Tawbah", "Yunus", "Hud", "Yusuf", "Ar-Rad", "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra", "Al-Kahf", "Maryam", "Taha", "Al-Anbiya", "Al-Hajj", "Al-Muminun", "An-Nur", "Al-Furqan", "Ash-Shuara", "An-Naml", "Al-Qasas", "Al-Ankabut", "Ar-Rum", "Luqman", "As-Sajdah", "Al-Ahzab", "Saba", "Fatir", "Ya-Sin", "As-Saffat", "Sad", "Az-Zumar", "Ghafir", "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiya", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf", "Adh-Dhariyat", "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqia", "Al-Hadid", "Al-Mujadila", "Al-Hashr", "Al-Mumtahina", "As-Saff", "Al-Jumuah", "Al-Munafiqun", "At-Taghabun", "At-Talaq", "At-Tahrim", "Al-Mulk", "Al-Qalam", "Al-Haqqa", "Al-Maarij", "Nuh", "Al-Jinn", "Al-Muzzammil", "Al-Muddathir", "Al-Qiyama", "Al-Insan", "Al-Mursalat", "An-Naba", "An-Naziat", "Abasa", "At-Takwir", "Al-Infitar", "Al-Mutaffifin", "Al-Inshiqaq", "Al-Buruj", "At-Tariq", "Al-Ala", "Al-Ghashiyah", "Al-Fajr", "Al-Balad", "Ash-Shams", "Al-Lail", "Ad-Duha", "Ash-Sharh", "At-Tin", "Al-Alaq", "Al-Qadr", "Al-Bayyina", "Az-Zalzala", "Al-Adiyat", "Al-Qariah", "At-Takathur", "Al-Asr", "Al-Humazah", "Al-Fil", "Quraish", "Al-Maun", "Al-Kawthar", "Al-Kafirun", "An-Nasr", "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"
+          ];
+
+          const surahList = document.getElementById('surah-list');
+
+          surahNames.forEach((name, index) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = "#";
+            a.textContent = name;
+            a.onclick = () => loadSurahContent(name);
+            li.appendChild(a);
+            surahList.appendChild(li);
+          });
+        </script>
+      </ul>
+    </div>
+
+    <div class="content">
+      <div id="surah-content" class="surah">
+        <!-- Surah content will be dynamically loaded -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const surahData = {
+      "Al-Fatiha": {
+        arabic: `
+                  بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+          الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ
+          الرَّحْمَنِ الرَّحِيمِ
+          مَالِكِ يَوْمِ الدِّينِ
+          إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ
+          اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ
+          صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِم غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ`,
+        translation: `In the name of Allah, the Most Gracious, the Most Merciful.
+          Praise be to Allah, the Lord of all the worlds,
+          The Most Gracious, the Most Merciful,
+          Master of the Day of Judgment.
+          You alone we worship, and You alone we ask for help.
+          Guide us on the Straight Path,
+          The path of those who have received Your grace;
+          not the path of those who have brought down wrath upon themselves, nor of those who have gone astray.`
+      },
+      "Al-Baqarah": {
+  arabic: `الالم
+ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ
+الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ
+
+Translation:
+Alif, Lam, Meem.
+This is the Book about which there is no doubt, a guidance for those conscious of Allah.
+Who believe in the unseen, establish prayer, and spend out of what We have provided for them.لَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ`,
+},
+"Al-Imran": {
+  arabic: `الم
+اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ
+نَزَّلَ عَلَيْكَ الْكِتَابَ بِالْحَقِّ مُصَدِّقًا لِمَا بَيْنَ يَدَيْهِ وَأَنْزَلَ التَّوْرَاةَ وَالْإِنْجِيلَ
+
+Translation:
+Alif, Lam, Meem.
+Allah! There is no deity except Him, the Ever-Living, the Sustainer of existence.
+He has sent down upon you, [O Muhammad], the Book in truth, confirming what was before it. And He revealed the Torah and the Gospel.`,
+},
+"An-Nisa": {
+  arabic: `يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ مِنْ نَفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً
+
+Translation:
+O mankind, fear your Lord, who created you from one soul and created from it its mate and dispersed from both of them many men and women.`,
+},
+"Al-Maidah": {
+  arabic: `يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ
+أُحِلَّتْ لَكُمْ بَهِيمَةُ الْأَنْعَامِ إِلَّا مَا يُتْلَىٰ عَلَيْكُمْ
+
+Translation:
+O you who have believed, fulfill [all] contracts.
+Lawful for you are the animals of grazing livestock except for that which is recited to you [in this Qur'an].
+
+`,
+},
+"Al-Anam": {
+  arabic: `الْحَمْدُ لِلَّهِ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ
+وَجَعَلَ الظُّلُمَاتِ وَالنُّورَ
+
+Translation:
+Praise be to Allah, who created the heavens and the earth and made the darkness and the light.
+
+`,
+},
+"Al-Araf": {
+  arabic: `الٓمٓصٓ
+كِتَابٌ أُنزِلَ إِلَيْكَ فَلَا يَكُنْ فِي صَدْرِكَ حَرَجٌ مِنْهُ
+
+Translation:
+Alif, Lam, Meem, Sad.
+This is a Book revealed to you – so let there not be in your breast distress because of it.
+
+`,
+},
+"Al-Anfal": {
+  arabic: `يَسْأَلُونَكَ عَنِ الْأَنْفَالِ ۖ قُلِ الْأَنْفَالُ لِلَّهِ وَالرَّسُولِ
+فَاتَّقُوا اللَّهَ وَأَصْلِحُوا ذَاتَ بَيْنِكُمْ
+
+Translation:
+They ask you about the bounties [of war]. Say, “The bounties belong to Allah and the Messenger. So fear Allah and amend that which is between you.”`,
+},
+"At-Tawbah": {
+  arabic: `بَرَاءَةٌ مِنَ اللَّهِ وَرَسُولِهِ إِلَى الَّذِينَ عَاهَدْتُمْ مِنَ الْمُشْرِكِينَ
+
+Translation:
+[This is] a disassociation from Allah and His Messenger to those with whom you had made a treaty among the polytheists.`,
+},
+"Yunus": {
+  arabic: `الر ۚ تِلْكَ آيَاتُ الْكِتَابِ الْحَكِيمِ
+
+Translation:
+These are the verses of the wise Book.`,
+},
+"Hud": {
+  arabic: `الر ۚ كِتَابٌ أُحْكِمَتْ آيَاتُهُ ثُمَّ فُصِّلَتْ مِنْ لَدُنْ حَكِيمٍ خَبِيرٍ
+
+Translation:
+Alif, Lam, Ra.
+[This is] a Book whose verses are perfected and then presented in detail from [one who is] Wise and Acquainted.
+
+`,
+},
+"Yusuf": {
+  arabic: `الر ۚ تِلْكَ آيَاتُ الْكِتَابِ الْمُبِينِ
+
+Translation:
+Alif, Lam, Ra.
+These are the verses of the clear Book.
+
+`,
+},
+"Ar-Rad": {
+  arabic: `الٓمٓر ۚ تِلْكَ آيَاتُ الْكِتَابِ
+
+Translation:
+Alif, Lam, Meem, Ra.
+These are the verses of the Book.`,
+},
+"Ibrahim": {
+  arabic: `الر ۚ كِتَابٌ أَنْزَلْنَاهُ إِلَيْكَ لِتُخْرِجَ النَّاسَ مِنَ الظُّلُمَاتِ إِلَى النُّورِ
+
+Translation:
+Alif, Lam, Ra.
+[This is] a Book We revealed to you, [O Muhammad], to bring people out of darkness into light.
+
+`,
+},
+"Al-Hijr": {
+  arabic: `الٓمٓرٓ ۚ تِلْكَ آيَاتُ الْكِتَابِ وَقُرْآنٍ مُّبِينٍ
+
+Translation:
+Alif, Lam, Meem, Ra.
+These are the verses of the Book and a clear Qur'an.s`,
+},
+    };
+
+    function loadSurahContent(name) {
+      const surahContent = document.getElementById('surah-content');
+      const surah = surahData[name];
+      if (surah) {
+        surahContent.innerHTML = `
+          <h2>${name}</h2>
+          <div class="arabic">${surah.arabic}</div>
+          <div class="translation">${surah.translation}</div>
+        `;
+      } else {
+        surahContent.innerHTML = `<p>Content for ${name} is not available yet.</p>`;
+      }
+    }
+
+        // Load default Surah on page load
+        loadSurahContent("Al-Fatiha");
+  </script>
+</body>
+</html>
+
